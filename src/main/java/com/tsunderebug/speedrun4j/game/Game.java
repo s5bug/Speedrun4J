@@ -2,6 +2,7 @@ package com.tsunderebug.speedrun4j.game;
 
 import com.google.gson.annotations.SerializedName;
 import com.tsunderebug.speedrun4j.data.Link;
+import com.tsunderebug.speedrun4j.game.run.Ruleset;
 import com.tsunderebug.speedrun4j.user.ModeratorType;
 import com.tsunderebug.speedrun4j.user.User;
 

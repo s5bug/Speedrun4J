@@ -1,4 +1,4 @@
-package com.tsunderebug.speedrun4j.game;
+package com.tsunderebug.speedrun4j.game.run;
 
 import com.google.gson.annotations.SerializedName;
 
