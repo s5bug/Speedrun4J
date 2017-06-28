@@ -2,7 +2,11 @@ package com.tsunderebug.speedrun4j.game;
 
 import com.google.gson.annotations.SerializedName;
 import com.tsunderebug.speedrun4j.data.Link;
+import com.tsunderebug.speedrun4j.user.ModeratorType;
+import com.tsunderebug.speedrun4j.user.User;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Game {
@@ -111,8 +115,21 @@ public class Game {
 		return publishers;
 	}
 
-	public Map<String, String> getModerators() { // TODO return map of User to ModeratorStatus
-		return moderators;
+	public Map<User, ModeratorType> getModerators() throws IOException {
+		Map<User, ModeratorType> modMap = new HashMap<>();
+		for(Map.Entry<String, String> e : moderators.entrySet()) {
+			User u = User.fromID(e.getKey());
+			ModeratorType m = null;
+			String modType = e.getValue();
+			if (modType.equals("moderator")) {
+				m = ModeratorType.MODERATOR;
+			} else if (modType.equals("super-moderator")) {
+				m = ModeratorType.SUPER_MODERATOR;
+
+			}
+			modMap.put(u, m);
+		}
+		return modMap;
 	}
 
 	/**
