@@ -3,6 +3,10 @@ package com.tsunderebug.speedrun4j.game;
 import com.tsunderebug.speedrun4j.data.Link;
 import com.tsunderebug.speedrun4j.game.run.Playtype;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Category {
 
 	private String id;
@@ -47,12 +51,9 @@ public class Category {
 		return links;
 	}
 
-	void setGame(Game g) {
-		this.game = game;
-	}
-
-	public Game getGame() {
-		return game;
+	public Game getGame() throws IOException {
+		String uri = Arrays.stream(links).filter((Link l) -> "game".equals(l.getRel())).findFirst().get().getUri(
+		return Game.fromID(uri.substring(uri.lastIndexOf('/') + 1));
 	}
 
 }
