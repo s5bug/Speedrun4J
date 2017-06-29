@@ -38,7 +38,7 @@ public class Game {
 
 	public static Game fromID(String id) throws IOException {
 		Gson g = new Gson();
-		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "/games/" + id).openStream());
+		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "games/" + id).openStream());
 		Game game = g.fromJson(r, Game.class);
 		r.close();
 		return game;
