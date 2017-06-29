@@ -29,9 +29,9 @@ public class Leaderboard {
 	public static Leaderboard forCategory(Category c) throws IOException {
 		Gson g = new Gson();
 		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "leaderboards/" + c.getGame().getId() + "/category/" + c.getId()).openStream());
-		Leaderboard l = g.fromJson(r, Leaderboard.class);
+		LeaderboardData l = g.fromJson(r, LeaderboardData.class);
 		r.close();
-		return l;
+		return l.data;
 	}
 
 	public String getLevel() {
@@ -57,5 +57,7 @@ public class Leaderboard {
 	public Link[] getLinks() {
 		return links;
 	}
+
+	private static class LeaderboardData{Leaderboard data;}
 
 }
