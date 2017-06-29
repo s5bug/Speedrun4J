@@ -160,4 +160,8 @@ public class Game {
 		return links;
 	}
 
+	public CategoryList getCategories() throws IOException {
+		return CategoryList.forGame(this);
+	}
+
 }
