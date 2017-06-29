@@ -1,12 +1,16 @@
 package com.tsunderebug.speedrun4j.game;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.tsunderebug.speedrun4j.Speedrun4J;
 import com.tsunderebug.speedrun4j.data.Link;
 import com.tsunderebug.speedrun4j.game.run.Ruleset;
 import com.tsunderebug.speedrun4j.user.ModeratorType;
 import com.tsunderebug.speedrun4j.user.User;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,9 +32,17 @@ public class Game {
 	private String[] developers;
 	private String[] publishers;
 	private Map<String, String> moderators;
-	private String created; // TODO is this a string?
+	private String created;
 	private GameAssets assets;
 	private Link[] links;
+
+	public static Game fromID(String id) throws IOException {
+		Gson g = new Gson();
+		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "/games/" + id).openStream());
+		Game game = g.fromJson(r, Game.class);
+		r.close();
+		return game;
+	}
 
 	public String getId() {
 		return id;

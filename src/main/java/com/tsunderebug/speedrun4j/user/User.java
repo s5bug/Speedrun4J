@@ -35,6 +35,63 @@ public class User {
 		return d.data;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Valid keys: "international", "japanese"
+	 * Names can be null
+	 * @return A map of locales to user names
+	 */
+	public Map<String, String> getNames() {
+		return names;
+	}
+
+	public String getWeblink() {
+		return weblink;
+	}
+
+	public NameStyle getNameStyle() {
+		return nameStyle;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public String getSignup() {
+		return signup;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public Resource getTwitch() {
+		return twitch;
+	}
+
+	public Resource getHitbox() {
+		return hitbox;
+	}
+
+	public Resource getYoutube() {
+		return youtube;
+	}
+
+	public Resource getTwitter() {
+		return twitter;
+	}
+
+	public Resource getSpeedrunslive() {
+		return speedrunslive;
+	}
+
+	public Link[] getLinks() {
+		return links;
+	}
+
 	private static class UserData{User data;}
 
 }
