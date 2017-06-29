@@ -23,6 +23,55 @@ public class Run {
 	private System system;
 	private Link splits;
 	private Map<String, String> values;
+
+	public String getId() {
+		return id;
+	}
+
+	public String getWeblink() {
+		return weblink;
+	}
+
+	public Videos getVideos() {
+		return videos;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public Player[] getPlayers() {
+		return players;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public String getSubmitted() {
+		return submitted;
+	}
+
+	public Map<String, String> getTimes() {
+		return times;
+	}
+
+	public System getSystem() {
+		return system;
+	}
+
+	public Link getSplits() {
+		return splits;
+	}
+
+	public Link[] getLinks() {
+		return links;
+	}
+
 	private Link[] links;
 
 }
