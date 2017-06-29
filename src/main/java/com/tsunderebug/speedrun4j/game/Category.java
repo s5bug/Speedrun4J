@@ -61,9 +61,11 @@ public class Category {
 	public static Category fromID(String id) throws IOException {
 		Gson g = new Gson();
 		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "categories/" + id).openStream());
-		Category c = g.fromJson(r, Category.class);
+		CategoryData c = g.fromJson(r, CategoryData.class);
 		r.close();
-		return c;
+		return c.data;
 	}
+
+	private static class CategoryData{Category data;}
 
 }
