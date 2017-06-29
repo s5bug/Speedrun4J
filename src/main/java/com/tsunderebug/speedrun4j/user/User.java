@@ -92,6 +92,10 @@ public class User {
 		return links;
 	}
 
+	public PersonalBests getPBs() throws IOException {
+		return PersonalBests.forUser(this);
+	}
+
 	private static class UserData{User data;}
 
 }
