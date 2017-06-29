@@ -13,7 +13,7 @@ public class GameList {
 
 	public static GameList withName(String name) throws IOException {
 		Gson g = new Gson();
-		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "/games?name=" + name).openStream());
+		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "games?name=" + name).openStream());
 		GameList l = g.fromJson(r, GameList.class);
 		r.close();
 		return l;
