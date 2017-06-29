@@ -13,6 +13,7 @@ public class Category {
 	private Playtype players;
 	private boolean miscellaneous;
 	private Link[] links;
+	private transient Game game;
 
 	public String getId() {
 		return id;
@@ -44,6 +45,14 @@ public class Category {
 
 	public Link[] getLinks() {
 		return links;
+	}
+
+	void setGame(Game g) {
+		this.game = game;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 
 }
