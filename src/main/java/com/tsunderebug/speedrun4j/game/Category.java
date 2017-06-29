@@ -1,9 +1,13 @@
 package com.tsunderebug.speedrun4j.game;
 
+import com.google.gson.Gson;
+import com.tsunderebug.speedrun4j.Speedrun4J;
 import com.tsunderebug.speedrun4j.data.Link;
 import com.tsunderebug.speedrun4j.game.run.Playtype;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Arrays;
 
 public class Category {
@@ -52,6 +56,14 @@ public class Category {
 	public Game getGame() throws IOException {
 		String uri = Arrays.stream(links).filter((Link l) -> "game".equals(l.getRel())).findFirst().get().getUri();
 		return Game.fromID(uri.substring(uri.lastIndexOf('/') + 1));
+	}
+
+	public static Category fromID(String id) throws IOException {
+		Gson g = new Gson();
+		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "categories/" + id).openStream());
+		Category c = g.fromJson(r, Category.class);
+		r.close();
+		return c;
 	}
 
 }

@@ -2,8 +2,10 @@ package com.tsunderebug.speedrun4j.game.run;
 
 import com.tsunderebug.speedrun4j.data.Link;
 import com.tsunderebug.speedrun4j.data.Videos;
+import com.tsunderebug.speedrun4j.game.Category;
 import com.tsunderebug.speedrun4j.platform.System;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class Run {
@@ -70,6 +72,10 @@ public class Run {
 
 	public Link[] getLinks() {
 		return links;
+	}
+
+	public Category getCategory() throws IOException {
+		return Category.fromID(category);
 	}
 
 	private Link[] links;
