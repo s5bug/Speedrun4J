@@ -14,4 +14,36 @@ public class Category {
 	private boolean miscellaneous;
 	private Link[] links;
 
+	public String getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getWeblink() {
+		return weblink;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getRules() {
+		return rules;
+	}
+
+	public Playtype getPlayers() {
+		return players;
+	}
+
+	public boolean isMiscellaneous() {
+		return miscellaneous;
+	}
+
+	public Link[] getLinks() {
+		return links;
+	}
+
 }
