@@ -16,7 +16,6 @@ public class Leaderboard {
 	private String weblink;
 	private String game;
 	private String category;
-
 	private String level;
 	private String platform;
 	private String region;

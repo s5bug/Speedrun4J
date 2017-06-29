@@ -19,7 +19,7 @@ public class Run {
 	private Player[] players;
 	private String date;
 	private String submitted;
-	private Map<String, String> times;
+	private Timeset times;
 	private System system;
 	private Link splits;
 	private Map<String, String> values;
@@ -56,7 +56,7 @@ public class Run {
 		return submitted;
 	}
 
-	public Map<String, String> getTimes() {
+	public Timeset getTimes() {
 		return times;
 	}
 
