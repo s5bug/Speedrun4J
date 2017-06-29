@@ -28,7 +28,7 @@ public class Leaderboard {
 
 	public static Leaderboard forCategory(Category c) throws IOException {
 		Gson g = new Gson();
-		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "leaderboards/" + c.getGame().getId() + "/categories/" + c.getId()).openStream());
+		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "leaderboards/" + c.getGame().getId() + "/category/" + c.getId()).openStream());
 		Leaderboard l = g.fromJson(r, Leaderboard.class);
 		r.close();
 		return l;
