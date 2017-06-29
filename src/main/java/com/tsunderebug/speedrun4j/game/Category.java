@@ -5,7 +5,6 @@ import com.tsunderebug.speedrun4j.game.run.Playtype;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Category {
 
@@ -17,7 +16,6 @@ public class Category {
 	private Playtype players;
 	private boolean miscellaneous;
 	private Link[] links;
-	private transient Game game;
 
 	public String getId() {
 		return id;

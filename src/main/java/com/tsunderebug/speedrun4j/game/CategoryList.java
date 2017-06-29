@@ -16,9 +16,6 @@ public class CategoryList {
 		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "games/" + g.getId() + "/categories").openStream());
 		CategoryList cl = gson.fromJson(r, CategoryList.class);
 		r.close();
-		for (Category cat : cl.data) {
-			cat.setGame(g);
-		}
 		return cl;
 	}
 
