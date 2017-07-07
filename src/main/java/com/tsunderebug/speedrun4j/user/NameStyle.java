@@ -16,9 +16,18 @@ public class NameStyle {
 	@SerializedName("color-to") private Map<String, String> colorTo;
 
 	public Color getColor() {
-		List<Color> c = color.values().stream().map(s -> new Color(Integer.parseInt(s.substring(1), 16))).collect(Collectors.toList());
-		List<Color> cf = colorFrom.values().stream().map(s -> new Color(Integer.parseInt(s.substring(1), 16))).collect(Collectors.toList());
-		List<Color> ct = colorTo.values().stream().map(s -> new Color(Integer.parseInt(s.substring(1), 16))).collect(Collectors.toList());
+		List<Color> c = new ArrayList<>();
+		if(color != null) {
+			c.addAll(color.values().stream().map(s -> new Color(Integer.parseInt(s.substring(1), 16))).collect(Collectors.toList()));
+		}
+		List<Color> cf = new ArrayList<>();
+		if(colorFrom != null) {
+			cf.addAll(colorFrom.values().stream().map(s -> new Color(Integer.parseInt(s.substring(1), 16))).collect(Collectors.toList()));
+		}
+		List<Color> ct = new ArrayList<>();
+		if(colorTo != null) {
+			ct.addAll(colorTo.values().stream().map(s -> new Color(Integer.parseInt(s.substring(1), 16))).collect(Collectors.toList()));
+		}
 		List<Color> all = new ArrayList<>();
 		all.addAll(c);
 		all.addAll(cf);
