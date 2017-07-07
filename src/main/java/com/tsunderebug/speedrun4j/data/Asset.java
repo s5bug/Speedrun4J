@@ -6,4 +6,8 @@ public class Asset {
 	private int width;
 	private int height;
 
+	public String getUri() {
+		return uri;
+	}
+
 }
