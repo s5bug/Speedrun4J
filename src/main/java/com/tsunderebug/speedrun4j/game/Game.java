@@ -10,6 +10,7 @@ import com.tsunderebug.speedrun4j.user.User;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +22,11 @@ public class Game {
 	private String abbreviation;
 	private String weblink;
 	private int released;
-	@SerializedName("release-date") private String releaseDate;
+	@SerializedName("release-date")
+	private String releaseDate;
 	private Ruleset ruleset;
-	@Deprecated private boolean romhack;
+	@Deprecated
+	private boolean romhack;
 	private String[] gametypes;
 	private String[] platforms;
 	private String[] regions;
@@ -38,7 +41,10 @@ public class Game {
 
 	public static Game fromID(String id) throws IOException {
 		Gson g = new Gson();
-		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "games/" + id).openStream());
+		URL u = new URL(Speedrun4J.API_ROOT + "games/" + id);
+		HttpURLConnection c = (HttpURLConnection) u.openConnection();
+		c.setRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		InputStreamReader r = new InputStreamReader(c.getInputStream());
 		GameData game = g.fromJson(r, GameData.class);
 		r.close();
 		return game.data;
@@ -51,6 +57,7 @@ public class Game {
 	/**
 	 * Valid keys: "international", "japanese", "twitch"
 	 * Names can be null
+	 *
 	 * @return A map of locales to game names
 	 */
 	public Map<String, String> getNames() {
@@ -59,6 +66,7 @@ public class Game {
 
 	/**
 	 * An abbreviation of the name, e.g. "smw" for Super Mario World
+	 *
 	 * @return An abbreviation of the name
 	 */
 	public String getAbbreviation() {
@@ -67,6 +75,7 @@ public class Game {
 
 	/**
 	 * The location of the game on Speedrun.com
+	 *
 	 * @return The url of the game page on Speedrun.com
 	 */
 	public String getWeblink() {
@@ -75,6 +84,7 @@ public class Game {
 
 	/**
 	 * The year the game was released. For day and month, see getReleaseDate
+	 *
 	 * @return The release year of the game
 	 */
 	public int getReleased() {
@@ -93,10 +103,11 @@ public class Game {
 	}
 
 	/**
-	 * @deprecated use getGametypes instead
 	 * @return whetger the game is a romhack
+	 * @deprecated use getGametypes instead
 	 */
-	@Deprecated public boolean isRomhack() {
+	@Deprecated
+	public boolean isRomhack() {
 		return romhack;
 	}
 
@@ -130,7 +141,7 @@ public class Game {
 
 	public Map<User, ModeratorType> getModerators() throws IOException {
 		Map<User, ModeratorType> modMap = new HashMap<>();
-		for(Map.Entry<String, String> e : moderators.entrySet()) {
+		for (Map.Entry<String, String> e : moderators.entrySet()) {
 			User u = User.fromID(e.getKey());
 			ModeratorType m = null;
 			String modType = e.getValue();
@@ -164,6 +175,8 @@ public class Game {
 		return CategoryList.forGame(this);
 	}
 
-	private static class GameData{Game data;}
+	private static class GameData {
+		Game data;
+	}
 
 }

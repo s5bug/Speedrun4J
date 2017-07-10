@@ -3,6 +3,7 @@ package com.tsunderebug.speedrun4j.user;
 import com.google.gson.Gson;
 import com.tsunderebug.speedrun4j.Speedrun4J;
 import com.tsunderebug.speedrun4j.game.run.PlacedRun;
+import sun.net.www.protocol.http.HttpURLConnection;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +19,10 @@ public class PersonalBests {
 
 	public static PersonalBests forUser(User user) throws IOException {
 		Gson g = new Gson();
-		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "users/" + user.getId() + "/personal-bests").openStream());
+		URL u = new URL(Speedrun4J.API_ROOT + "users/" + user.getId() + "/personal-bests");
+		HttpURLConnection c = (HttpURLConnection) u.openConnection();
+		c.setRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		InputStreamReader r = new InputStreamReader(c.getInputStream());
 		PersonalBests pb = g.fromJson(r, PersonalBests.class);
 		r.close();
 		return pb;

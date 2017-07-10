@@ -8,6 +8,7 @@ import com.tsunderebug.speedrun4j.data.Resource;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
@@ -29,7 +30,22 @@ public class User {
 
 	public static User fromID(String id) throws IOException {
 		Gson g = new Gson();
-		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "users/" + id).openStream());
+		URL u = new URL(Speedrun4J.API_ROOT + "users/" + id);
+		HttpURLConnection c = (HttpURLConnection) u.openConnection();
+		c.addRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		InputStreamReader r = new InputStreamReader(c.getInputStream());
+		UserData d = g.fromJson(r, UserData.class);
+		r.close();
+		return d.data;
+	}
+
+	public static User fromApiKey(String key) throws IOException {
+		Gson g = new Gson();
+		URL u = new URL(Speedrun4J.API_ROOT + "profile");
+		HttpURLConnection c = (HttpURLConnection) u.openConnection();
+		c.addRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		c.addRequestProperty("X-Api-Key", key);
+		InputStreamReader r = new InputStreamReader(c.getInputStream());
 		UserData d = g.fromJson(r, UserData.class);
 		r.close();
 		return d.data;

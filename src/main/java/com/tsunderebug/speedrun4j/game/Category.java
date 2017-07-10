@@ -7,6 +7,7 @@ import com.tsunderebug.speedrun4j.game.run.Playtype;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -60,12 +61,17 @@ public class Category {
 
 	public static Category fromID(String id) throws IOException {
 		Gson g = new Gson();
-		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "categories/" + id).openStream());
-		CategoryData c = g.fromJson(r, CategoryData.class);
+		URL u = new URL(Speedrun4J.API_ROOT + "categories/" + id);
+		HttpURLConnection c = (HttpURLConnection) u.openConnection();
+		c.setRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		InputStreamReader r = new InputStreamReader(c.getInputStream());
+		CategoryData cd = g.fromJson(r, CategoryData.class);
 		r.close();
-		return c.data;
+		return cd.data;
 	}
 
-	private static class CategoryData{Category data;}
+	private static class CategoryData {
+		Category data;
+	}
 
 }

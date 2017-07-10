@@ -8,6 +8,7 @@ import com.tsunderebug.speedrun4j.game.run.PlacedRun;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
@@ -20,7 +21,8 @@ public class Leaderboard {
 	private String platform;
 	private String region;
 	private boolean emulators;
-	@SerializedName("video-only") private boolean videoOnly;
+	@SerializedName("video-only")
+	private boolean videoOnly;
 	private String timing;
 	private Map<String, String> values;
 	private PlacedRun[] runs;
@@ -28,7 +30,10 @@ public class Leaderboard {
 
 	public static Leaderboard forCategory(Category c) throws IOException {
 		Gson g = new Gson();
-		InputStreamReader r = new InputStreamReader(new URL(Speedrun4J.API_ROOT + "leaderboards/" + c.getGame().getId() + "/category/" + c.getId()).openStream());
+		URL u = new URL(Speedrun4J.API_ROOT + "leaderboards/" + c.getGame().getId() + "/category/" + c.getId());
+		HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+		conn.setRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		InputStreamReader r = new InputStreamReader(conn.getInputStream());
 		LeaderboardData l = g.fromJson(r, LeaderboardData.class);
 		r.close();
 		return l.data;
@@ -58,6 +63,8 @@ public class Leaderboard {
 		return links;
 	}
 
-	private static class LeaderboardData{Leaderboard data;}
+	private static class LeaderboardData {
+		Leaderboard data;
+	}
 
 }
