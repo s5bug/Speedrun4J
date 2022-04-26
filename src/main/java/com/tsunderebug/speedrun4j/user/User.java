@@ -16,6 +16,8 @@ public class User {
 
 	private String id;
 	private Map<String, String> names;
+	private boolean supporterAnimation;
+	private String pronouns;
 	private String weblink;
 	@SerializedName("name-style") private NameStyle nameStyle;
 	private String role;
@@ -32,7 +34,7 @@ public class User {
 		Gson g = new Gson();
 		URL u = new URL(Speedrun4J.API_ROOT + "users/" + id);
 		HttpURLConnection c = (HttpURLConnection) u.openConnection();
-		c.addRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		c.addRequestProperty("User-Agent", Speedrun4J.getUserAgent());
 		InputStreamReader r = new InputStreamReader(c.getInputStream());
 		UserData d = g.fromJson(r, UserData.class);
 		r.close();
@@ -43,7 +45,7 @@ public class User {
 		Gson g = new Gson();
 		URL u = new URL(Speedrun4J.API_ROOT + "profile");
 		HttpURLConnection c = (HttpURLConnection) u.openConnection();
-		c.addRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		c.addRequestProperty("User-Agent", Speedrun4J.getUserAgent());
 		c.addRequestProperty("X-Api-Key", key);
 		InputStreamReader r = new InputStreamReader(c.getInputStream());
 		UserData d = g.fromJson(r, UserData.class);
@@ -106,6 +108,14 @@ public class User {
 
 	public Link[] getLinks() {
 		return links;
+	}
+
+	public String getPronouns() {
+		return pronouns;
+	}
+
+	public boolean hasSupporterAnimation() {
+		return supporterAnimation;
 	}
 
 	public PersonalBests getPBs() throws IOException {
