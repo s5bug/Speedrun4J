@@ -5,11 +5,15 @@ import com.google.gson.annotations.SerializedName;
 import com.tsunderebug.speedrun4j.Speedrun4J;
 import com.tsunderebug.speedrun4j.data.Link;
 import com.tsunderebug.speedrun4j.data.Resource;
+import com.tsunderebug.speedrun4j.exception.SpeedrunJsonException;
+import com.tsunderebug.speedrun4j.exception.SpeedrunUrlException;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 public class User {
@@ -29,30 +33,123 @@ public class User {
 	private Resource twitter;
 	private Resource speedrunslive;
 	private Link[] links;
+	private UserAssets assets;
 
-	public static User fromID(String id) throws IOException {
+	/**
+	 * Get user from ID or Username
+	 * @param id ID or username
+	 * @return speedrun.com User
+	 */
+	public static User fromID(String id) {
+
 		Gson g = new Gson();
-		URL u = new URL(Speedrun4J.API_ROOT + "users/" + id);
-		HttpURLConnection c = (HttpURLConnection) u.openConnection();
-		c.addRequestProperty("User-Agent", Speedrun4J.getUserAgent());
-		InputStreamReader r = new InputStreamReader(c.getInputStream());
+		URL u;
+
+		try {
+			u = new URL(Speedrun4J.API_ROOT + "users/" + id);
+		} catch (MalformedURLException e) {
+			throw new SpeedrunUrlException("Could not get URL from ID.");
+		}
+
+		HttpURLConnection c;
+
+		try {
+			c = (HttpURLConnection) u.openConnection();
+		} catch (IOException e) {
+			throw new SpeedrunUrlException("Could not connect to URL from ID.");
+		}
+
+		c.addRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
+		InputStreamReader r;
+
+		try {
+			r = new InputStreamReader(c.getInputStream());
+		} catch (IOException e) {
+			throw new SpeedrunJsonException("Could not read input from input stream.");
+		}
+
 		UserData d = g.fromJson(r, UserData.class);
-		r.close();
+
+		try {
+			r.close();
+		} catch (IOException e) {
+			throw new SpeedrunJsonException("Could not close input stream.");
+		}
+
 		return d.data;
+
 	}
 
-	public static User fromApiKey(String key) throws IOException {
+	/**
+	 * Get user from API Key
+	 * @see <a href="https://github.com/speedruncomorg/api/blob/master/authentication.md">Authentication Documentation</a>
+	 * @param key API key from speedrun.com
+	 * @return User from API Key
+	 */
+	public static User fromApiKey(String key) {
+
 		Gson g = new Gson();
-		URL u = new URL(Speedrun4J.API_ROOT + "profile");
-		HttpURLConnection c = (HttpURLConnection) u.openConnection();
-		c.addRequestProperty("User-Agent", Speedrun4J.getUserAgent());
+		URL u;
+
+		try {
+			u = new URL(Speedrun4J.API_ROOT + "profile");
+		} catch (MalformedURLException e) {
+			throw new SpeedrunUrlException("Could not get URL from API Key.");
+		}
+
+		HttpURLConnection c;
+
+		try {
+			c = (HttpURLConnection) u.openConnection();
+		} catch (IOException e) {
+			throw new SpeedrunUrlException("Could not open URL from API Key.");
+		}
+
+		c.addRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
 		c.addRequestProperty("X-Api-Key", key);
-		InputStreamReader r = new InputStreamReader(c.getInputStream());
+		InputStreamReader r;
+
+		try {
+			r = new InputStreamReader(c.getInputStream());
+		} catch (IOException e) {
+			throw new SpeedrunJsonException("Could not read input from input stream.");
+		}
+
 		UserData d = g.fromJson(r, UserData.class);
-		r.close();
+
+		try {
+			r.close();
+		} catch (IOException e) {
+			throw new SpeedrunJsonException("Could not close input stream.");
+		}
+
 		return d.data;
+
 	}
 
+	public static class UserAssets {
+
+		private String supporterIcon;
+		private Resource icon;
+		private Resource image;
+
+		public String getSupporterIcon() {
+			return supporterIcon;
+		}
+
+		public Resource getIcon() {
+			return icon;
+		}
+
+		public Resource getImage() {
+			return image;
+		}
+	}
+
+	/**
+	 * Returns internal ID from user
+	 * @return ID from User
+	 */
 	public String getId() {
 		return id;
 	}
@@ -118,8 +215,12 @@ public class User {
 		return supporterAnimation;
 	}
 
-	public PersonalBests getPBs() throws IOException {
+	public PersonalBests getPBs() {
 		return PersonalBests.forUser(this);
+	}
+
+	public UserAssets getAssets() {
+		return assets;
 	}
 
 	private static class UserData{User data;}

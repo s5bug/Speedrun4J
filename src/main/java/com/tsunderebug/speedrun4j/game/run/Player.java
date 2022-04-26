@@ -1,5 +1,6 @@
 package com.tsunderebug.speedrun4j.game.run;
 
+import com.tsunderebug.speedrun4j.user.NameStyle;
 import com.tsunderebug.speedrun4j.user.User;
 
 import java.awt.*;
@@ -12,19 +13,19 @@ public class Player {
 	private String name;
 	private String uri;
 
-	public String getName() throws IOException {
-		if(id != null) {
+	public String getName() {
+		if (id != null) {
 			return User.fromID(id).getNames().get("international");
 		} else {
 			return name;
 		}
 	}
 
-	public Color getColor() throws IOException {
-		if(id != null) {
-			return User.fromID(id).getNameStyle().getColor();
+	public NameStyle getNameStyle() {
+		if (id != null) {
+			return User.fromID(id).getNameStyle();
 		} else {
-			return Color.white;
+			return null;
 		}
 	}
 
