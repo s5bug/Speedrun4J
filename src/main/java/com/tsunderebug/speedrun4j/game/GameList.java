@@ -14,7 +14,7 @@ public class GameList {
 
 	public static GameList withName(String name) throws IOException {
 		Gson g = new Gson();
-		URL u = new URL(Speedrun4J.API_ROOT + "games?name=" + name.replaceAll(" ", "_"));
+		URL u = new URL(Speedrun4J.API_ROOT + "games?name=" + name.replace(" ", "_"));
 		HttpURLConnection c = (HttpURLConnection) u.openConnection();
 		c.addRequestProperty("User-Agent", Speedrun4J.USER_AGENT);
 		InputStreamReader r = new InputStreamReader(c.getInputStream());

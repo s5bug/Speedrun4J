@@ -19,13 +19,15 @@ public class Game {
 
 	private String id;
 	private Map<String, String> names;
+	private int boostReceived;
+	private int boostDistinctDonors;
 	private String abbreviation;
 	private String weblink;
+	private String discord;
 	private int released;
 	@SerializedName("release-date")
 	private String releaseDate;
 	private Ruleset ruleset;
-	@Deprecated
 	private boolean romhack;
 	private String[] gametypes;
 	private String[] platforms;
@@ -106,7 +108,6 @@ public class Game {
 	 * @return whetger the game is a romhack
 	 * @deprecated use getGametypes instead
 	 */
-	@Deprecated
 	public boolean isRomhack() {
 		return romhack;
 	}
@@ -139,20 +140,25 @@ public class Game {
 		return publishers;
 	}
 
-	public Map<User, ModeratorType> getModerators() throws IOException {
+	public Map<User, ModeratorType> getModerators() {
+
 		Map<User, ModeratorType> modMap = new HashMap<>();
+
 		for (Map.Entry<String, String> e : moderators.entrySet()) {
+
 			User u = User.fromID(e.getKey());
 			ModeratorType m = null;
 			String modType = e.getValue();
+
 			if (modType.equals("moderator")) {
 				m = ModeratorType.MODERATOR;
 			} else if (modType.equals("super-moderator")) {
 				m = ModeratorType.SUPER_MODERATOR;
-
 			}
+
 			modMap.put(u, m);
 		}
+
 		return modMap;
 	}
 
@@ -173,6 +179,18 @@ public class Game {
 
 	public CategoryList getCategories() throws IOException {
 		return CategoryList.forGame(this);
+	}
+
+	public int getBoostReceived() {
+		return boostReceived;
+	}
+
+	public int getBoostDistinctDonors() {
+		return boostDistinctDonors;
+	}
+
+	public String getDiscord() {
+		return discord;
 	}
 
 	private static class GameData {
