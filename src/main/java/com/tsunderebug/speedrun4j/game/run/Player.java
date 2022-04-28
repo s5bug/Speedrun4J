@@ -1,9 +1,7 @@
 package com.tsunderebug.speedrun4j.game.run;
 
+import com.tsunderebug.speedrun4j.user.NameStyle;
 import com.tsunderebug.speedrun4j.user.User;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class Player {
 
@@ -12,20 +10,23 @@ public class Player {
 	private String name;
 	private String uri;
 
-	public String getName() throws IOException {
-		if(id != null) {
-			return User.fromID(id).getNames().get("international");
-		} else {
-			return name;
-		}
+	public String getName() {
+		return id != null ? User.fromID(id).getNames().get("international") : name;
 	}
 
-	public Color getColor() throws IOException {
-		if(id != null) {
-			return User.fromID(id).getNameStyle().getColor();
-		} else {
-			return Color.white;
-		}
+	public NameStyle getNameStyle() {
+		return id != null ? User.fromID(id).getNameStyle() : null;
 	}
 
+	public String getRel() {
+		return rel;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public String getUri() {
+		return uri;
+	}
 }

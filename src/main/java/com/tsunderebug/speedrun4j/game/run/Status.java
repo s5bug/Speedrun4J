@@ -20,7 +20,7 @@ public class Status {
 		return status;
 	}
 
-	public User getExaminer() throws IOException {
+	public User getExaminer() {
 		return User.fromID(examiner);
 	}
 

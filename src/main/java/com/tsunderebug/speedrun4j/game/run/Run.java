@@ -25,6 +25,7 @@ public class Run {
 	private System system;
 	private Link splits;
 	private Map<String, String> values;
+	private Link[] links;
 
 	public String getId() {
 		return id;
@@ -78,6 +79,15 @@ public class Run {
 		return Category.fromID(category);
 	}
 
-	private Link[] links;
+	public String getGame() {
+		return game;
+	}
 
+	public String getLevel() {
+		return level;
+	}
+
+	public Map<String, String> getValues() {
+		return values;
+	}
 }
